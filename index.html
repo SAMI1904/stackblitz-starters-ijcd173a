@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorForce CRM - All-in-One Creator Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar styling for slick glassmorphism look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen flex flex-col">
+
+    <!-- TOP NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 border-b backdrop-blur-md bg-slate-900/80 border-slate-800 transition-colors duration-200" id="top-header">
+        <div class="flex items-center justify-between px-4 lg:px-8 py-3">
+            
+            <!-- Logo & Creator Profile -->
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('overview')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-emerald-400 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                            <svg class="w-5 h-5 text-indigo-400 fill-indigo-400" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-violet-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
+                            CreatorForce
+                        </span>
+                        <span class="hidden sm:inline-block ml-2 text-[10px] font-semibold tracking-wider uppercase px-2 py-0.5 bg-indigo-500/10 text-indigo-400 rounded-full border border-indigo-500/20">
+                            PRO CRM
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Profile Switcher -->
+                <div class="hidden md:flex items-center space-x-3 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/90 text-sm">
+                    <div class="w-7 h-7 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center font-bold text-white text-xs">
+                        AC
+                    </div>
+                    <div>
+                        <div class="font-semibold text-xs leading-none flex items-center gap-1">
+                            @AlexCreates
+                            <svg class="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">YT 1.2M • IG 450k • TT 800k</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Metrics & Global Controls -->
+            <div class="flex items-center space-x-3 lg:space-x-6">
+                
+                <!-- Live Financial Badges -->
+                <div class="hidden lg:flex items-center space-x-5 border-r pr-6 border-slate-800">
+                    <div class="text-right">
+                        <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Run-Rate ARR</div>
+                        <div class="font-mono font-bold text-emerald-400 text-sm flex items-center justify-end gap-1" id="hdr-arr">
+                            $299,640
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Pending Payouts</div>
+                        <div class="font-mono font-bold text-amber-400 text-sm" id="hdr-pending">
+                            $12,500
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="p-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition text-amber-400" id="theme-btn" title="Toggle Theme">
+                    <svg class="w-4 h-4" id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+
+                <!-- Copilot Toggle Button -->
+                <button onclick="toggleCopilotDrawer()" class="flex items-center space-x-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold shadow-lg transition-all bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30 border border-indigo-500/30">
+                    <svg class="w-3.5 h-3.5 text-indigo-300 animate-pulse" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                    <span class="hidden sm:inline">AI Copilot</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER WITH SIDEBAR -->
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="w-16 md:w-64 border-r border-slate-800 bg-slate-900/40 flex flex-col justify-between shrink-0 transition-all" id="sidebar">
+            <div class="p-2 md:p-4 space-y-1">
+                <div class="px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-500 hidden md:block">
+                    Creator Suite
+                </div>
+
+                <nav class="space-y-1">
+                    <button onclick="switchTab('overview')" id="nav-overview" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-indigo-500/20">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                            <span class="hidden md:inline">Overview</span>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('collabs')" id="nav-collabs" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-3a2 2 0 0 1-2-2V2M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+                            <span class="hidden md:inline">Brand Deals</span>
+                        </div>
+                        <span class="hidden md:inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-800 text-slate-300" id="badge-deals">8</span>
+                    </button>
+
+                    <button onclick="switchTab('income')" id="nav-income" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span class="hidden md:inline">Income & ROAS</span>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('expenses')" id="nav-expenses" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
+                            <span class="hidden md:inline">Expenses & Tax</span>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+                            <span class="hidden md:inline">Analytics</span>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('ideas')" id="nav-ideas" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"/></svg>
+                            <span class="hidden md:inline">Idea Vault</span>
+                        </div>
+                        <span class="hidden md:inline-block px-2 py-0.5 text-[10px] rounded-full font-bold bg-slate-800 text-slate-300" id="badge-ideas">4</span>
+                    </button>
+
+                    <button onclick="switchTab('copilot')" id="nav-copilot" class="nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg>
+                            <span class="hidden md:inline">Copilot Full Chat</span>
+                        </div>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Connected Platforms Card -->
+            <div class="p-3 m-2 rounded-2xl bg-indigo-950/30 border border-indigo-500/20 hidden md:block">
+                <div class="text-xs font-semibold text-indigo-300 flex items-center justify-between mb-2">
+                    <span>Connected Apps</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <div class="flex items-center space-x-2 text-slate-400">
+                    <span class="text-red-500 font-bold text-xs">YT</span>
+                    <span class="text-pink-500 font-bold text-xs">IG</span>
+                    <span class="text-cyan-400 font-bold text-xs">TT</span>
+                    <span class="text-emerald-400 font-bold text-xs">SUB</span>
+                    <span class="text-[10px] text-slate-500 ml-auto">+2 active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 p-4 lg:p-8 overflow-y-auto">
+
+            <!-- ================= OVERVIEW TAB ================= -->
+            <div id="tab-overview" class="tab-content space-y-6 max-w-7xl mx-auto">
+                <!-- Welcome Banner -->
+                <div class="p-6 rounded-2xl border border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 relative overflow-hidden">
+                    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight">
+                                Welcome back, <span class="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">Alex</span> 🚀
+                            </h1>
+                            <p class="text-sm mt-1 text-slate-400">
+                                Your creator ecosystem generated <span class="font-bold text-emerald-400">$24,970</span> this month. You have 3 pending contract reviews.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="openAddDealModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-500/20 transition">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Brand Deal
+                            </button>
+                            <button onclick="openAddExpenseModal()" class="px-4 py-2 rounded-xl text-xs font-medium border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+                                + Log Expense
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total YTD Revenue</span>
+                            <span class="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </span>
+                        </div>
+                        <div class="text-2xl font-black mt-2 tracking-tight" id="kpi-ytd-rev">$189,510</div>
+                        <div class="flex items-center text-xs font-semibold text-emerald-400 mt-2 gap-1">
+                            ↑ +28.4% vs last year
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Active Pipeline</span>
+                            <span class="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            </span>
+                        </div>
+                        <div class="text-2xl font-black mt-2 tracking-tight" id="kpi-deals-count">8 Deals</div>
+                        <div class="text-xs text-slate-400 mt-2">
+                            Avg Deal Value: <span class="font-semibold text-slate-200" id="kpi-avg-deal">$5,637</span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Cross Engagement</span>
+                            <span class="p-2 rounded-lg bg-violet-500/10 text-violet-400">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </span>
+                        </div>
+                        <div class="text-2xl font-black mt-2 tracking-tight">8.42%</div>
+                        <div class="flex items-center text-xs font-semibold text-emerald-400 mt-2 gap-1">
+                            Top 5% in Tech & Lifestyle
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Tax Reserve Req.</span>
+                            <span class="p-2 rounded-lg bg-amber-500/10 text-amber-400">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </span>
+                        </div>
+                        <div class="text-2xl font-black mt-2 tracking-tight text-amber-400" id="kpi-tax-reserve">$45,533</div>
+                        <div class="text-xs text-slate-400 mt-2">
+                            Est. tax reserve: <span class="font-semibold text-emerald-400">100% On Track</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Chart & Mix Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 p-6 rounded-2xl border border-slate-800 bg-slate-900/60">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-bold text-base">Monthly Income Stream Trend</h3>
+                                <p class="text-xs text-slate-400">Combined earnings across YouTube AdSense, Sponsorships, & Digital Products</p>
+                            </div>
+                            <span class="text-xs font-mono bg-indigo-500/10 text-indigo-400 px-2.5 py-1 rounded-lg border border-indigo-500/20">2026 Growth</span>
+                        </div>
+                        <div class="h-56 w-full relative">
+                            <svg class="w-full h-full overflow-visible" viewBox="0 0 500 150" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <line x1="0" y1="30" x2="500" y2="30" stroke="#334155" stroke-dasharray="3 3" stroke-opacity="0.3" />
+                                <line x1="0" y1="75" x2="500" y2="75" stroke="#334155" stroke-dasharray="3 3" stroke-opacity="0.3" />
+                                <line x1="0" y1="120" x2="500" y2="120" stroke="#334155" stroke-dasharray="3 3" stroke-opacity="0.3" />
+
+                                <path d="M0,110 Q50,90 100,95 T200,60 T300,70 T400,30 T500,15 L500,150 L0,150 Z" fill="url(#chartGrad)" />
+                                <path d="M0,110 Q50,90 100,95 T200,60 T300,70 T400,30 T500,15" fill="none" stroke="#a855f7" stroke-width="3.5" />
+                                <circle cx="0" cy="110" r="4" fill="#6366f1" />
+                                <circle cx="100" cy="95" r="4" fill="#6366f1" />
+                                <circle cx="200" cy="60" r="4" fill="#6366f1" />
+                                <circle cx="300" cy="70" r="4" fill="#6366f1" />
+                                <circle cx="400" cy="30" r="4" fill="#6366f1" />
+                                <circle cx="500" cy="15" r="4" fill="#6366f1" />
+                            </svg>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 mt-4 border-t border-slate-800 pt-3">
+                            <span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct (Current)</span>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/60">
+                        <h3 class="font-bold text-base mb-1">Revenue Stream Mix</h3>
+                        <p class="text-xs text-slate-400 mb-6">Diversification breakdown</p>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>Brand Sponsorships</span>
+                                    <span class="text-slate-400">$85,400 (52%)</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2"><div class="bg-violet-500 h-2 rounded-full" style="width: 52%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>YouTube AdSense</span>
+                                    <span class="text-slate-400">$39,200 (24%)</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 24%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>Digital Courses</span>
+                                    <span class="text-slate-400">$22,900 (14%)</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: 14%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span>Affiliate Commissions</span>
+                                    <span class="text-slate-400">$16,400 (10%)</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width: 10%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Deals Table Preview -->
+                <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/60">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-base">Active Brand Deal Pipeline</h3>
+                        <button onclick="switchTab('collabs')" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1">
+                            View Full Kanban Board →
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400">
+                                    <th class="pb-3 font-semibold">Brand</th>
+                                    <th class="pb-3 font-semibold">Value</th>
+                                    <th class="pb-3 font-semibold">Platform</th>
+                                    <th class="pb-3 font-semibold">Current Stage</th>
+                                    <th class="pb-3 font-semibold">Deliverables</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/50" id="overview-deals-table">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= BRAND DEALS (KANBAN) TAB ================= -->
+            <div id="tab-collabs" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tight">Collab Pipeline Kanban</h1>
+                        <p class="text-xs text-slate-400">Move deals between stages: Inquiry, Pitch, Negotiating, Contract, Creation, Review, Published, Paid</p>
+                    </div>
+                    <button onclick="openAddDealModal()" class="px-4 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-medium rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-500/20">
+                        + Add New Deal
+                    </button>
+                </div>
+
+                <!-- Kanban Columns Container -->
+                <div class="flex gap-4 overflow-x-auto pb-6 scrollbar-thin" id="kanban-container">
+                    <!-- Dynamic Kanban columns populated via renderKanban() -->
+                </div>
+            </div>
+
+            <!-- ================= INCOME & ROAS TAB ================= -->
+            <div id="tab-income" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">Income Tracker & ROAS Calculator</h1>
+                    <p class="text-xs text-slate-400">Itemized transaction log and paid promotion return on ad spend calculator</p>
+                </div>
+
+                <!-- Interactive ROAS Calculator -->
+                <div class="p-6 rounded-2xl border border-slate-800 bg-gradient-to-r from-slate-900 via-indigo-950/20 to-slate-900 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <svg class="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
+                        <h3 class="font-bold text-base">Campaign Return on Ad Spend (ROAS) Calculator</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-400 block mb-1">Ad Spend / Promotion Cost ($)</label>
+                            <input type="number" id="roas-spend" value="1200" oninput="calculateROAS()" class="w-full px-3 py-2 rounded-xl text-sm border border-slate-700 bg-slate-900 font-mono text-white" />
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-400 block mb-1">Gross Revenue Generated ($)</label>
+                            <input type="number" id="roas-revenue" value="4800" oninput="calculateROAS()" class="w-full px-3 py-2 rounded-xl text-sm border border-slate-700 bg-slate-900 font-mono text-white" />
+                        </div>
+                        <div class="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex flex-col justify-center">
+                            <span class="text-xs font-semibold text-indigo-300 uppercase">Calculated ROAS</span>
+                            <span class="text-3xl font-black text-emerald-400 mt-1" id="roas-output">4.00x</span>
+                            <span class="text-[10px] text-slate-400 mt-1" id="roas-profit">Profit Margin: $3,600</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions Table -->
+                <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/60">
+                    <h3 class="font-bold text-base mb-4">Itemized Transaction Log</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400">
+                                    <th class="pb-3 font-semibold">Source / Description</th>
+                                    <th class="pb-3 font-semibold">Platform</th>
+                                    <th class="pb-3 font-semibold">Type</th>
+                                    <th class="pb-3 font-semibold">Amount</th>
+                                    <th class="pb-3 font-semibold">Status</th>
+                                    <th class="pb-3 font-semibold text-right">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/50" id="income-transactions-table">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= EXPENSES & TAX TAB ================= -->
+            <div id="tab-expenses" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tight">Expenses & Tax-Ready Write-offs</h1>
+                        <p class="text-xs text-slate-400">Track equipment, software, contractor fees, and write-offs</p>
+                    </div>
+                    <button onclick="openAddExpenseModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5">
+                        + Log Expense
+                    </button>
+                </div>
+
+                <!-- Tax Calculation Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 rounded-xl bg-violet-500/10 border border-violet-500/20">
+                        <span class="text-xs font-semibold text-violet-300">Total Expenses YTD</span>
+                        <div class="text-2xl font-black text-violet-400 mt-2" id="exp-total-val">$26,999</div>
+                        <span class="text-[10px] text-slate-400 mt-1 block">100% compliant write-offs</span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                        <span class="text-xs font-semibold text-emerald-300">Net Taxable Creator Income</span>
+                        <div class="text-2xl font-black text-emerald-400 mt-2" id="exp-net-income">$162,511</div>
+                        <span class="text-[10px] text-slate-400 mt-1 block">Gross minus qualified expenses</span>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-semibold text-amber-300">Est. Tax Reserve Req. (28%)</span>
+                            <div class="text-2xl font-black text-amber-400 mt-2" id="exp-tax-est">$45,503</div>
+                        </div>
+                        <button onclick="alert('Exporting Tax Preparation Report...')" class="mt-3 px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-lg text-xs font-semibold transition">
+                            Export Tax PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Expenses Table -->
+                <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/60">
+                    <h3 class="font-bold text-base mb-4">Itemized Business Write-Offs</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="border-b border-slate-800 text-slate-400">
+                                    <th class="pb-3 font-semibold">Title / Description</th>
+                                    <th class="pb-3 font-semibold">Category</th>
+                                    <th class="pb-3 font-semibold">Amount</th>
+                                    <th class="pb-3 font-semibold">Deductible</th>
+                                    <th class="pb-3 font-semibold">Receipt</th>
+                                    <th class="pb-3 font-semibold text-right">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/50" id="expenses-table">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= CROSS-PLATFORM ANALYTICS TAB ================= -->
+            <div id="tab-analytics" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">Cross-Platform Unified Analytics</h1>
+                    <p class="text-xs text-slate-400">Consolidated stats across YouTube, Instagram, TikTok, and Substack</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-bold text-sm text-red-500">YouTube Main</span>
+                            <span class="text-xs font-mono text-emerald-400 font-bold">$18.50 RPM</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between text-slate-400"><span>Subscribers:</span> <span class="font-bold text-slate-200">1,240,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Monthly Views:</span> <span class="font-bold text-slate-200">2,850,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Avg Engagement:</span> <span class="font-bold text-emerald-400">9.2%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-bold text-sm text-pink-500">Instagram</span>
+                            <span class="text-xs font-mono text-emerald-400 font-bold">$6.80 eCPM</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between text-slate-400"><span>Followers:</span> <span class="font-bold text-slate-200">452,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Monthly Reel Views:</span> <span class="font-bold text-slate-200">1,920,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Story Impressions:</span> <span class="font-bold text-emerald-400">42,000</span></div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="font-bold text-sm text-cyan-400">TikTok</span>
+                            <span class="text-xs font-mono text-emerald-400 font-bold">$1.20 RPM</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between text-slate-400"><span>Followers:</span> <span class="font-bold text-slate-200">810,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Monthly Views:</span> <span class="font-bold text-slate-200">5,400,000</span></div>
+                            <div class="flex justify-between text-slate-400"><span>Viral Conversion:</span> <span class="font-bold text-emerald-400">14.1%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= IDEA VAULT TAB ================= -->
+            <div id="tab-ideas" class="tab-content hidden space-y-6 max-w-7xl mx-auto">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tight">Idea Vault & Content Planner</h1>
+                        <p class="text-xs text-slate-400">Store video scripts, sponsor brief notes, and video ideas</p>
+                    </div>
+                    <button onclick="openAddIdeaModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5">
+                        + Quick Capture Idea
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="ideas-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- ================= AI COPILOT FULL TAB ================= -->
+            <div id="tab-copilot" class="tab-content hidden max-w-4xl mx-auto space-y-4 h-[calc(100vh-120px)] flex flex-col">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight flex items-center gap-2">
+                        <svg class="w-6 h-6 text-indigo-400 fill-indigo-400" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                        CreatorForce AI Copilot
+                    </h1>
+                    <p class="text-xs text-slate-400">Ask questions about income, sponsor negotiations, or tax reserves</p>
+                </div>
+
+                <!-- Chat History Container -->
+                <div class="flex-1 p-4 rounded-2xl border border-slate-800 bg-slate-900/60 overflow-y-auto space-y-4" id="copilot-chat-box">
+                    <!-- Dynamic chat messages -->
+                </div>
+
+                <!-- Prompt Suggestion Chips -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="sendCopilotQuery('What is my highest paying brand deal?')" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs border border-indigo-500/20 transition">💡 Highest paying deal?</button>
+                    <button onclick="sendCopilotQuery('Estimate my tax liability for this year')" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs border border-indigo-500/20 transition">📊 Tax reserve summary</button>
+                    <button onclick="sendCopilotQuery('Which platform gives me highest RPM?')" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs border border-indigo-500/20 transition">📈 Platform RPM comparison</button>
+                    <button onclick="sendCopilotQuery('Draft response to Nike sponsor pitch')" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs border border-indigo-500/20 transition">✉️ Draft pitch reply</button>
+                </div>
+
+                <!-- Chat Input Controls -->
+                <div class="flex gap-2">
+                    <input type="text" id="copilot-input" placeholder="Ask Copilot about your creator business..." onkeydown="if(event.key==='Enter') sendCopilotQuery()" class="flex-1 px-4 py-3 rounded-xl text-xs border border-slate-800 bg-slate-900 text-white focus:outline-none focus:border-indigo-500" />
+                    <button onclick="sendCopilotQuery()" class="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold flex items-center gap-1">
+                        Send
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SLIDE-OVER COPILOT QUICK DRAWER -->
+    <div id="copilot-drawer" class="fixed inset-y-0 right-0 w-80 lg:w-96 border-l border-slate-800 bg-slate-900 z-50 shadow-2xl flex flex-col transition-transform translate-x-full">
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <svg class="w-5 h-5 text-indigo-400 fill-indigo-400" viewBox="0 0 24 24"><path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z"/></svg>
+                <span class="font-bold text-sm">AI Copilot Quick Panel</span>
+            </div>
+            <button onclick="toggleCopilotDrawer()" class="p-1 text-slate-400 hover:text-white">✕</button>
+        </div>
+        <div class="flex-1 p-4 overflow-y-auto space-y-3" id="drawer-chat-box">
+            <!-- Syncs with Copilot state -->
+        </div>
+        <div class="p-3 border-t border-slate-800 flex gap-2">
+            <input type="text" id="drawer-input" placeholder="Query Copilot..." onkeydown="if(event.key==='Enter') sendDrawerQuery()" class="flex-1 px-3 py-2 rounded-lg text-xs border border-slate-800 bg-slate-950 text-white" />
+            <button onclick="sendDrawerQuery()" class="p-2 bg-indigo-600 text-white rounded-lg text-xs">Send</button>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD BRAND DEAL -->
+    <div id="modal-add-deal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-2xl p-6 border border-slate-800 bg-slate-900">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-base">Add New Brand Deal</h3>
+                <button onclick="closeAddDealModal()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+            <form onsubmit="handleSaveDeal(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Brand Name</label>
+                    <input type="text" id="deal-brand" required class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="e.g. Sony, Nike" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Deal Value ($)</label>
+                        <input type="number" id="deal-value" required class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="5000" />
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Platform</label>
+                        <select id="deal-platform" class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white">
+                            <option value="YouTube">YouTube</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="Substack">Substack</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">Deliverables</label>
+                    <input type="text" id="deal-deliverables" class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="1 Dedicated Video + Shorts" />
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddDealModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold">Save Deal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: LOG EXPENSE -->
+    <div id="modal-add-expense" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-2xl p-6 border border-slate-800 bg-slate-900">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-base">Log Business Expense</h3>
+                <button onclick="closeAddExpenseModal()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+            <form onsubmit="handleSaveExpense(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Item Title</label>
+                    <input type="text" id="exp-title" required class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="e.g. Wireless Microphone Kit" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Amount ($)</label>
+                        <input type="number" id="exp-amount" required class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="299" />
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Category</label>
+                        <select id="exp-category" class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white">
+                            <option value="Equipment">Equipment</option>
+                            <option value="Software">Software</option>
+                            <option value="Contractors">Contractors</option>
+                            <option value="Studio Shoots">Studio Shoots</option>
+                            <option value="Travel">Travel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddExpenseModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold">Log Write-Off</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ADD IDEA -->
+    <div id="modal-add-idea" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="w-full max-w-md rounded-2xl p-6 border border-slate-800 bg-slate-900">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-base">Capture Content Idea</h3>
+                <button onclick="closeAddIdeaModal()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+            <form onsubmit="handleSaveIdea(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">Video Title / Topic</label>
+                    <input type="text" id="idea-title" required class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white" placeholder="e.g. My $10k Desk Setup Tour" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Platform</label>
+                        <select id="idea-platform" class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white">
+                            <option value="YouTube">YouTube</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="TikTok">TikTok</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-1">Priority</label>
+                        <select id="idea-priority" class="w-full px-3 py-2 rounded-xl border border-slate-700 bg-slate-800 text-white">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddIdeaModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold">Save Idea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // PIPELINE STAGES
+        const PIPELINE_STAGES = ['Inquiry', 'Pitch', 'Negotiating', 'Contract', 'Creation', 'Review', 'Published', 'Paid'];
+
+        // STATE INITIALIZATION
+        let deals = [
+            { id: '1', brand: 'Nike', logo: '👟', value: 8500, platform: 'YouTube', stage: 'Inquiry', deliverables: '1 Dedicated Video + Shorts' },
+            { id: '2', brand: 'SquareSpace', logo: '⬛', value: 4200, platform: 'YouTube', stage: 'Pitch', deliverables: '60s Mid-roll Integration' },
+            { id: '3', brand: 'NordVPN', logo: '🛡️', value: 3500, platform: 'Instagram', stage: 'Negotiating', deliverables: '1 Reel + 2 Stories' },
+            { id: '4', brand: 'Lululemon', logo: '🧘', value: 12000, platform: 'Instagram', stage: 'Contract', deliverables: '2 Reels + Grid Post' },
+            { id: '5', brand: 'Notion', logo: '📝', value: 5000, platform: 'TikTok', stage: 'Creation', deliverables: '2 TikTok Videos' },
+            { id: '6', brand: 'Guelph Audio', logo: '🎧', value: 2800, platform: 'YouTube', stage: 'Review', deliverables: '30s Mid-roll Integration' },
+            { id: '7', brand: 'Anker', logo: '🔋', value: 6500, platform: 'YouTube', stage: 'Published', deliverables: 'Unboxing + Review' },
+            { id: '8', brand: 'Epidemic Sound', logo: '🎵', value: 3100, platform: 'TikTok', stage: 'Paid', deliverables: '3 Sound Integrations' }
+        ];
+
+        let transactions = [
+            { id: 't1', source: 'Nike Deal Deposit', amount: 4250, platform: 'YouTube', type: 'Sponsorship', status: 'Cleared', date: '2026-10-10' },
+            { id: 't2', source: 'YouTube AdSense Oct Payout', amount: 8420, platform: 'YouTube', type: 'AdSense', status: 'Cleared', date: '2026-10-01' },
+            { id: 't3', source: 'Lululemon Upfront Deposit', amount: 6000, platform: 'Instagram', type: 'Sponsorship', status: 'Processing', date: '2026-10-14' },
+            { id: 't4', source: 'Amazon Affiliates Commission', amount: 1840, platform: 'Cross-Platform', type: 'Affiliates', status: 'Cleared', date: '2026-09-28' },
+            { id: 't5', source: 'Creator Course Sales', amount: 12400, platform: 'Website', type: 'Courses', status: 'Cleared', date: '2026-10-05' }
+        ];
+
+        let expenses = [
+            { id: 'e1', title: 'Sony FX3 Cinema Camera', amount: 3899, category: 'Equipment', date: '2026-10-02', receipt: true },
+            { id: 'e2', title: 'Adobe Creative Cloud Annual', amount: 599, category: 'Software', date: '2026-09-15', receipt: true },
+            { id: 'e3', title: 'Video Editor Contractor', amount: 2400, category: 'Contractors', date: '2026-10-12', receipt: false },
+            { id: 'e4', title: 'NYC Studio Space Rental', amount: 850, category: 'Studio Shoots', date: '2026-09-28', receipt: true }
+        ];
+
+        let ideas = [
+            { id: 'i1', title: 'I Switched to AI Video Editing for 30 Days', platform: 'YouTube', sponsor: 'Notion', priority: 'High' },
+            { id: 'i2', title: 'Day in the Life of a Solopreneur Creator', platform: 'TikTok', sponsor: 'None', priority: 'Medium' },
+            { id: 'i3', title: 'Minimalist Desk Setup Tour 2026', platform: 'YouTube', sponsor: 'Anker', priority: 'High' },
+            { id: 'i4', title: 'How to Negotiate $10k+ Brand Deals', platform: 'Instagram', sponsor: 'Self-Promoted', priority: 'Medium' }
+        ];
+
+        let copilotMessages = [
+            { role: 'assistant', text: "Hey Alex! 👋 I'm your CreatorForce AI Copilot. Ask me about your revenue run-rate, pending brand deals, tax reserve status, or ask me to draft pitch replies!" }
+        ];
+
+        let isDarkMode = true;
+
+        // INITIALIZATION ON LOAD
+        window.onload = function() {
+            renderAll();
+        };
+
+        function renderAll() {
+            renderOverview();
+            renderKanban();
+            renderIncome();
+            renderExpenses();
+            renderIdeas();
+            renderCopilot();
+        }
+
+        // NAVIGATION TAB SWITCHER
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = 'nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition text-slate-400 hover:bg-slate-800/60 hover:text-slate-200';
+            });
+            document.getElementById(`nav-${tabId}`).className = 'nav-btn w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-indigo-500/20';
+        }
+
+        // DARK/LIGHT THEME TOGGLE
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                document.body.className = "bg-slate-950 text-slate-100 transition-colors duration-200 antialiased min-h-screen flex flex-col";
+                document.getElementById('top-header').className = "sticky top-0 z-40 border-b backdrop-blur-md bg-slate-900/80 border-slate-800 transition-colors duration-200";
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.body.className = "bg-slate-50 text-slate-900 transition-colors duration-200 antialiased min-h-screen flex flex-col";
+                document.getElementById('top-header').className = "sticky top-0 z-40 border-b backdrop-blur-md bg-white/80 border-slate-200 transition-colors duration-200";
+            }
+        }
+
+        // RENDER OVERVIEW
+        function renderOverview() {
+            const totalDealsValue = deals.reduce((sum, d) => sum + d.value, 0);
+            const ytdRev = 189510;
+            const taxReserve = Math.round((ytdRev - 26999) * 0.28);
+
+            document.getElementById('kpi-ytd-rev').innerText = `$${ytdRev.toLocaleString()}`;
+            document.getElementById('kpi-deals-count').innerText = `${deals.length} Deals`;
+            document.getElementById('kpi-avg-deal').innerText = `$${Math.round(totalDealsValue / deals.length || 0).toLocaleString()}`;
+            document.getElementById('kpi-tax-reserve').innerText = `$${taxReserve.toLocaleString()}`;
+
+            const overviewTable = document.getElementById('overview-deals-table');
+            overviewTable.innerHTML = deals.slice(0, 5).map(deal => `
+                <tr class="hover:bg-slate-800/30 transition">
+                    <td class="py-3 font-bold flex items-center gap-2"><span>${deal.logo}</span> ${deal.brand}</td>
+                    <td class="py-3 font-mono font-bold text-emerald-400">$${deal.value.toLocaleString()}</td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">${deal.platform}</span></td>
+                    <td class="py-3"><span class="px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-300 font-semibold border border-indigo-500/20">${deal.stage}</span></td>
+                    <td class="py-3 text-slate-400">${deal.deliverables}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('badge-deals').innerText = deals.length;
+            document.getElementById('badge-ideas').innerText = ideas.length;
+        }
+
+        // RENDER KANBAN PIPELINE
+        function renderKanban() {
+            const container = document.getElementById('kanban-container');
+            container.innerHTML = PIPELINE_STAGES.map(stage => {
+                const stageDeals = deals.filter(d => d.stage === stage);
+                const stageTotal = stageDeals.reduce((sum, d) => sum + d.value, 0);
+
+                return `
+                    <div class="w-72 shrink-0 rounded-2xl border border-slate-800 bg-slate-900/40 p-3 flex flex-col max-h-[75vh]">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 px-1">
+                            <div>
+                                <h4 class="font-bold text-xs uppercase tracking-wider text-slate-200">${stage}</h4>
+                                <span class="text-[10px] text-slate-400 font-mono">$${stageTotal.toLocaleString()}</span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-bold text-[10px]">${stageDeals.length}</span>
+                        </div>
+
+                        <div class="space-y-3 overflow-y-auto pr-1 flex-1">
+                            ${stageDeals.map(deal => `
+                                <div class="p-4 rounded-xl border border-slate-800 bg-slate-900 shadow-sm hover:border-slate-700 transition">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div class="flex items-center gap-1.5 font-bold text-sm">
+                                            <span>${deal.logo}</span> ${deal.brand}
+                                        </div>
+                                        <span class="font-mono font-bold text-xs text-emerald-400">$${deal.value.toLocaleString()}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mb-3">${deal.deliverables}</p>
+                                    <div class="flex items-center justify-between mt-3 pt-2 border-t border-slate-800/60">
+                                        <button onclick="moveDealStage('${deal.id}', 'prev')" ${stage === PIPELINE_STAGES[0] ? 'disabled class="opacity-20 cursor-not-allowed"' : 'class="px-2 py-1 bg-slate-800 text-slate-300 rounded text-[10px]"'}>← Prev</button>
+                                        <button onclick="moveDealStage('${deal.id}', 'next')" ${stage === PIPELINE_STAGES[PIPELINE_STAGES.length-1] ? 'disabled class="opacity-20 cursor-not-allowed"' : 'class="px-2 py-1 bg-indigo-600 text-white rounded text-[10px] font-semibold"'}>Next →</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                            ${stageDeals.length === 0 ? '<div class="p-4 border border-dashed border-slate-800 rounded-xl text-center text-xs text-slate-500">No deals in stage</div>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function moveDealStage(dealId, direction) {
+            deals = deals.map(deal => {
+                if (deal.id === dealId) {
+                    const idx = PIPELINE_STAGES.indexOf(deal.stage);
+                    const nextIdx = direction === 'next' ? Math.min(PIPELINE_STAGES.length - 1, idx + 1) : Math.max(0, idx - 1);
+                    return { ...deal, stage: PIPELINE_STAGES[nextIdx] };
+                }
+                return deal;
+            });
+            renderAll();
+        }
+
+        // ROAS CALCULATOR
+        function calculateROAS() {
+            const spend = parseFloat(document.getElementById('roas-spend').value) || 0;
+            const rev = parseFloat(document.getElementById('roas-revenue').value) || 0;
+            const roas = spend > 0 ? (rev / spend).toFixed(2) : '0';
+            const profit = Math.max(0, rev - spend);
+
+            document.getElementById('roas-output').innerText = `${roas}x`;
+            document.getElementById('roas-profit').innerText = `Profit Margin: $${profit.toLocaleString()}`;
+        }
+
+        // RENDER INCOME
+        function renderIncome() {
+            const table = document.getElementById('income-transactions-table');
+            table.innerHTML = transactions.map(t => `
+                <tr class="hover:bg-slate-800/30 transition">
+                    <td class="py-3 font-semibold">${t.source}</td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">${t.platform}</span></td>
+                    <td class="py-3 text-slate-400">${t.type}</td>
+                    <td class="py-3 font-mono font-bold text-emerald-400">$${t.amount.toLocaleString()}</td>
+                    <td class="py-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">${t.status}</span></td>
+                    <td class="py-3 text-right text-slate-400">${t.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        // RENDER EXPENSES
+        function renderExpenses() {
+            const table = document.getElementById('expenses-table');
+            table.innerHTML = expenses.map(e => `
+                <tr class="hover:bg-slate-800/30 transition">
+                    <td class="py-3 font-semibold">${e.title}</td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">${e.category}</span></td>
+                    <td class="py-3 font-mono font-bold text-slate-200">$${e.amount.toLocaleString()}</td>
+                    <td class="py-3 text-emerald-400 font-semibold">✓ Yes</td>
+                    <td class="py-3">${e.receipt ? '<span class="text-indigo-400 text-[10px] bg-indigo-500/10 px-2 py-0.5 rounded">Uploaded</span>' : '<span class="text-amber-400 text-[10px] bg-amber-500/10 px-2 py-0.5 rounded">Missing</span>'}</td>
+                    <td class="py-3 text-right text-slate-400">${e.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        // RENDER IDEAS
+        function renderIdeas() {
+            const grid = document.getElementById('ideas-grid');
+            grid.innerHTML = ideas.map(idea => `
+                <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">${idea.platform}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${idea.priority === 'High' ? 'bg-red-500/10 text-red-400' : 'bg-slate-800 text-slate-400'}">${idea.priority} Priority</span>
+                    </div>
+                    <h4 class="font-bold text-sm leading-snug">${idea.title}</h4>
+                    <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span>Sponsor: <strong class="text-indigo-400">${idea.sponsor}</strong></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // AI COPILOT CHAT ENGINE
+        function renderCopilot() {
+            const box = document.getElementById('copilot-chat-box');
+            const drawerBox = document.getElementById('drawer-chat-box');
+
+            const content = copilotMessages.map(msg => `
+                <div class="flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}">
+                    ${msg.role === 'assistant' ? '<div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0">AI</div>' : ''}
+                    <div class="p-3.5 rounded-2xl text-xs leading-relaxed max-w-xl whitespace-pre-line ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700/40'}">
+                        ${msg.text}
+                    </div>
+                </div>
+            `).join('');
+
+            box.innerHTML = content;
+            drawerBox.innerHTML = content;
+            box.scrollTop = box.scrollHeight;
+            drawerBox.scrollTop = drawerBox.scrollHeight;
+        }
+
+        function sendCopilotQuery(presetQuery) {
+            const input = document.getElementById('copilot-input');
+            const query = presetQuery || input.value.trim();
+            if (!query) return;
+
+            copilotMessages.push({ role: 'user', text: query });
+            if (!presetQuery) input.value = '';
+            renderCopilot();
+
+            setTimeout(() => {
+                let reply = "I've analyzed your CreatorForce records. ";
+                const q = query.toLowerCase();
+
+                if (q.includes('highest paying') || q.includes('deal')) {
+                    const top = [...deals].sort((a,b) => b.value - a.value)[0];
+                    reply = `🏆 Your highest paying brand deal is with **${top.brand}** valued at **$${top.value.toLocaleString()}** on ${top.platform} (${top.deliverables}).`;
+                } else if (q.includes('tax') || q.includes('reserve')) {
+                    reply = `📊 **Tax Liability Summary**:
+• Gross YTD Income: $189,510
+• Deductible Expenses: $26,999
+• Est. Tax Reserve Required (28%): **$45,503**
+💡 Recommendation: Put aside $2,400 from your upcoming Nike payout to stay 100% tax-ready.`;
+                } else if (q.includes('rpm') || q.includes('platform')) {
+                    reply = `📈 **Platform RPM & Efficiency Analysis**:
+• **YouTube**: $18.50 RPM (Highest revenue density)
+• **Instagram**: $6.80 eCPM
+• **TikTok**: $1.20 RPM (Great for top-funnel discovery)
+🎯 Focus on securing 2 more YouTube long-form integrations this month!`;
+                } else if (q.includes('nike') || q.includes('pitch') || q.includes('draft')) {
+                    reply = `✉️ **Draft Pitch Response to Nike**:
+
+"Hi Sarah, Thanks for reaching out! We'd love to partner with Nike on our upcoming Q4 tech & workout series. Given our average 320k dedicated views and 8.4% engagement rate, our baseline rate for 1 YouTube Integration + 2 IG Reels is $9,500. Let me know if you'd like me to send our updated media kit!"`;
+                } else {
+                    reply = `⚡ You currently have active deals in your pipeline totaling **$${deals.reduce((a,b)=>a+b.value,0).toLocaleString()}**. Your current run-rate ARR is **$299,640**. Keep up the momentum!`;
+                }
+
+                copilotMessages.push({ role: 'assistant', text: reply });
+                renderCopilot();
+            }, 500);
+        }
+
+        function sendDrawerQuery() {
+            const input = document.getElementById('drawer-input');
+            const query = input.value.trim();
+            if (!query) return;
+            sendCopilotQuery(query);
+            input.value = '';
+        }
+
+        function toggleCopilotDrawer() {
+            const drawer = document.getElementById('copilot-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        // MODAL CONTROLS
+        function openAddDealModal() { document.getElementById('modal-add-deal').classList.remove('hidden'); document.getElementById('modal-add-deal').classList.add('flex'); }
+        function closeAddDealModal() { document.getElementById('modal-add-deal').classList.add('hidden'); }
+        
+        function openAddExpenseModal() { document.getElementById('modal-add-expense').classList.remove('hidden'); document.getElementById('modal-add-expense').classList.add('flex'); }
+        function closeAddExpenseModal() { document.getElementById('modal-add-expense').classList.add('hidden'); }
+
+        function openAddIdeaModal() { document.getElementById('modal-add-idea').classList.remove('hidden'); document.getElementById('modal-add-idea').classList.add('flex'); }
+        function closeAddIdeaModal() { document.getElementById('modal-add-idea').classList.add('hidden'); }
+
+        function handleSaveDeal(e) {
+            e.preventDefault();
+            const brand = document.getElementById('deal-brand').value;
+            const val = parseFloat(document.getElementById('deal-value').value) || 0;
+            const plat = document.getElementById('deal-platform').value;
+            const deliv = document.getElementById('deal-deliverables').value || 'Standard Integration';
+
+            deals.unshift({ id: Date.now().toString(), brand, logo: '💼', value: val, platform: plat, stage: 'Inquiry', deliverables: deliv });
+            closeAddDealModal();
+            renderAll();
+        }
+
+        function handleSaveExpense(e) {
+            e.preventDefault();
+            const title = document.getElementById('exp-title').value;
+            const amt = parseFloat(document.getElementById('exp-amount').value) || 0;
+            const cat = document.getElementById('exp-category').value;
+
+            expenses.unshift({ id: Date.now().toString(), title, amount: amt, category: cat, date: new Date().toISOString().split('T')[0], receipt: true });
+            closeAddExpenseModal();
+            renderAll();
+        }
+
+        function handleSaveIdea(e) {
+            e.preventDefault();
+            const title = document.getElementById('idea-title').value;
+            const plat = document.getElementById('idea-platform').value;
+            const prio = document.getElementById('idea-priority').value;
+
+            ideas.unshift({ id: Date.now().toString(), title, platform: plat, sponsor: 'None', priority: prio });
+            closeAddIdeaModal();
+            renderAll();
+        }
+    </script>
+</body>
+</html>
